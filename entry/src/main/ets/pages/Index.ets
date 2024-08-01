@@ -1,0 +1,38 @@
+import { PracticePage } from './PracticePage';
+
+@Entry
+@Component
+struct Index {
+  @State currentTabIndex:number = 0;
+
+  build() {
+    RelativeContainer() {
+      Tabs(){
+        TabContent(){
+          PracticePage()
+        }.tabBar(this.barBuilder(0,$r('app.media.ic_practice'),$r('app.media.ic_practice_selected'),'答题'))
+        TabContent(){
+          Text('圈子')
+        }.tabBar(this.barBuilder(1,$r('app.media.ic_circle'),$r('app.media.ic_circle_selected'),'圈子'))
+        TabContent(){
+          Text('我的')
+        }.tabBar(this.barBuilder(2,$r('app.media.ic_mine'),$r('app.media.ic_mine_selected'),'我的'))
+      }.barPosition(BarPosition.End)
+      .onChange(index=>{
+        this.currentTabIndex = index;
+      })
+    }
+    .height('100%')
+    .width('100%')
+  }
+  @Builder barBuilder(index:number,icon:Resource,selectedIcon:Resource,title:string){
+    Column(){
+      Image(index === this.currentTabIndex ? selectedIcon:icon)
+        .width(25)
+        .height(25)
+      Text(title)
+        .fontColor(index === this.currentTabIndex ? Color.Black:Color.Grey)
+        .fontWeight(FontWeight.Medium)
+    }
+  }
+}
